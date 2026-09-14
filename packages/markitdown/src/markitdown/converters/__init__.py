@@ -27,6 +27,12 @@ from ._cu_converter import (
 )
 from ._epub_converter import EpubConverter
 from ._csv_converter import CsvConverter
+from . import _rss_converter as _rss_converter_module
+from ._urljoin_preserve import resolve_url as _preserve_feed_urljoin
+
+# urllib.parse.urljoin collapses empty path segments. Replace the RSS helper
+# so feed links keep significant repeated slashes (see #2468).
+_rss_converter_module._resolve_url = _preserve_feed_urljoin
 
 __all__ = [
     "PlainTextConverter",
